@@ -1,110 +1,66 @@
 mcp-name: io.github.Richard-Ewing/exogram
 <!-- mcp-name: io.github.Richard-Ewing/exogram -->
 
-# Exogram MCP Server
+# Exogram FastMCP Server (`v0.2.0`)
 
 [![PyPI](https://img.shields.io/pypi/v/mcp-server-exogram)](https://pypi.org/project/mcp-server-exogram/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-A Model Context Protocol (MCP) server providing tools to evaluate, commit, and audit agentic actions through the **Exogram Authority Runtime**.
+Universal Model Context Protocol (MCP) server for **Exogram**, giving Claude Desktop, Cursor, Google Antigravity, and OpenAI Agents direct access to your Personal Neural Network (`Work · People · Life`), Encrypted Memory Vault, 12 A2UI Composable Living Tiles, and Deterministic `0.07ms` Instinct Action Governance.
 
-This server enables AI models (like Claude Desktop) to request cryptographic authorization before executing state-changing tools and securely store/retrieve records in the Exogram vault.
+Runs out-of-the-box in **Zero-Signup Local SQLite WAL Mode** (`~/.exogram/vault.db`) when no API key is set, or connects to **Exogram Cloud** (`https://exogram.ai/api/mcp`) when `EXOGRAM_API_KEY` is provided.
 
-## Features
-
-- **Action Evaluation** — Request cryptographic authorization before executing state-changing operations
-- **Audit Ledger** — Commit executed actions to an immutable, tamper-proof audit trail
-- **Encrypted Vault** — Store facts/records with encryption, PII scrubbing, and conflict detection
-- **Semantic Search** — Search stored records using vector similarity
-
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `exogram_evaluate_action` | Request authorization for a tool call. Returns a token if ALLOWED, or blocks execution if it violates policy constraints. |
-| `exogram_commit_action` | Commit an executed action token to the immutable audit ledger. |
-| `exogram_store_record` | Store a fact/record in the encrypted trust vault (scrubs PII, matches conflicts). |
-| `exogram_search_records` | Search vault records using semantic similarity. |
-
-## Installation
-
-### Using uv (recommended)
+## 30-Second Zero-Signup Quickstart
 
 ```bash
-uv pip install mcp-server-exogram
+uvx mcp-server-exogram --local
 ```
 
-### Using pip
-
-```bash
-pip install mcp-server-exogram
-```
-
-## Configuration
-
-### Claude Desktop
-
-Add this to your Claude Desktop configuration file:
+### Claude Desktop / Cursor / Antigravity Config (Zero-Signup Local Mode)
 
 ```json
 {
   "mcpServers": {
     "exogram": {
-      "command": "uv",
-      "args": [
-        "run",
-        "--package",
-        "mcp-server-exogram",
-        "mcp-server-exogram"
-      ],
+      "command": "uvx",
+      "args": ["mcp-server-exogram", "--local"]
+    }
+  }
+}
+```
+
+### Cloud Mode Config (`https://exogram.ai/api/mcp`)
+
+```json
+{
+  "mcpServers": {
+    "exogram": {
+      "command": "uvx",
+      "args": ["mcp-server-exogram"],
       "env": {
-        "EXOGRAM_API_URL": "https://api.exogram.ai",
-        "EXOGRAM_BEARER_TOKEN": "<YOUR_EXOGRAM_BEARER_TOKEN>"
+        "EXOGRAM_API_KEY": "<your-exogram-api-key>",
+        "EXOGRAM_API_URL": "https://api.exogram.ai"
       }
     }
   }
 }
 ```
 
-### Using uvx
+## Exposed MCP Tools
 
-```bash
-EXOGRAM_API_URL=https://api.exogram.ai \
-EXOGRAM_BEARER_TOKEN=your-token \
-uvx mcp-server-exogram
-```
-
-## Environment Variables
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `EXOGRAM_BEARER_TOKEN` | Yes | — | Your Exogram API bearer token |
-| `EXOGRAM_API_URL` | No | `https://api.exogram.ai` | Exogram API base URL |
-
-## Development
-
-```bash
-# Clone and setup
-git clone https://github.com/Richard-Ewing/servers.git
-cd servers/src/exogram
-
-# Install dependencies
-uv sync --all-extras --dev
-
-# Run type checking
-uv run pyright
-
-# Run linting
-uv run ruff check .
-
-# Run tests
-uv run pytest tests/
-
-# Build package
-uv build
-```
+| Tool | Description |
+|------|-------------|
+| `search_memory_vault` | Hybrid RRF semantic + lexical search across `Work`, `People`, and `Life` spheres |
+| `update_memory_vault` | Persist salient facts with 3-Horizon Episodic Lifecycle & Instinct Pre-Mutation gating |
+| `traverse_neural_graph` | Infinite-Hop Spreading Activation + HippoRAG 2 Spectral PPR traversal |
+| `evaluate_instinct_action_gate` | Deterministic `0.07ms` state-hash verification & Instinct action gate |
+| `render_live_widget` | Emit validated A2UI Composable Living Tiles (`living-tiles-v5.schema.json`) |
+| `exogram_evaluate_action` | Request cryptographic action authorization token |
+| `exogram_commit_action` | Commit executed action token to the SHA-256 audit hash chain |
+| `exogram_store_record` | Store a record in the Exogram Vault |
+| `exogram_search_records` | Search stored records in the Exogram Vault |
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT. See [LICENSE](LICENSE) for details.
